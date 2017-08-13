@@ -67,6 +67,21 @@ public:
   ///* Sigma point spreading parameter
   double lambda_;
 
+  ///* Storage for last time stamp
+  long long previous_timestamp_;
+
+  ///* Process Noise Covariance Matrix
+  MatrixXd Q;
+
+  ///* Radar measurements
+  int n_z_radar_ = 3;
+
+  ///* Lidar measurements
+  int n_z_lidar_ = 2;
+
+  // Measurement Noises
+  MatrixXd R_laser_;
+  MatrixXd R_radar_;
 
   /**
    * Constructor
@@ -92,16 +107,9 @@ public:
   void Prediction(double delta_t);
 
   /**
-   * Updates the state and the state covariance matrix using a laser measurement
-   * @param meas_package The measurement at k+1
+   * Updates both kinds of sensor data
    */
-  void UpdateLidar(MeasurementPackage meas_package);
-
-  /**
-   * Updates the state and the state covariance matrix using a radar measurement
-   * @param meas_package The measurement at k+1
-   */
-  void UpdateRadar(MeasurementPackage meas_package);
+  void UpdateCommon(MeasurementPackage meas_package);
 };
 
 #endif /* UKF_H */
