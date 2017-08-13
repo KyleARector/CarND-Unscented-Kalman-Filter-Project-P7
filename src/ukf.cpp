@@ -1,5 +1,5 @@
 #include "ukf.h"
-#include "Eigen/Dense" 
+#include "Eigen/Dense"
 #include <iostream>
 
 using namespace std;
@@ -24,7 +24,7 @@ UKF::UKF() {
   P_ = MatrixXd(5, 5);
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 1.5;
+  std_a_ = 0.7;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
   std_yawdd_ = 0.6;
@@ -103,7 +103,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
       double rho = meas_package.raw_measurements_[0];
       double phi = meas_package.raw_measurements_[1];
-      double v = meas_package.raw_measurements_[2];
+      double v = 0.0;
       double px = rho * cos(phi);
       double py = rho * sin(phi);
       double yawd = 0.0;
